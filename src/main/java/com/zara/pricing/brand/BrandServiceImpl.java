@@ -6,8 +6,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class BrandServiceImpl implements BrandService {
 	
+	private final BrandRepository brandRepository;
+	
 	@Autowired
-	private BrandRepository brandRepository;
+	public BrandServiceImpl(BrandRepository brandRepository) {
+		this.brandRepository = brandRepository;
+	}
 
 	@Override
 	public Brand getBrand(long idBrand) {
