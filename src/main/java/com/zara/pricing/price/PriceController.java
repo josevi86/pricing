@@ -3,6 +3,7 @@ package com.zara.pricing.price;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +22,7 @@ public class PriceController {
 	
 	
 	@GetMapping(value = "/active")
-    public PriceDTO getPriceByProductAndDates(@RequestParam int idProduct, @RequestParam int idBrand, Date date) {
+    public PriceDTO getPriceByProductAndDates(@RequestParam int idProduct, @RequestParam int idBrand, @RequestParam  @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date date) {
         return priceService.getActivePriceByProductAndBrandAndDate(idProduct, idBrand, date);
     }
 	

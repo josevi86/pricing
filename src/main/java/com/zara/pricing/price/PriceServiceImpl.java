@@ -31,9 +31,15 @@ public class PriceServiceImpl implements PriceService {
 		Brand brand = brandService.getBrand(idBrand);
 		Product product = productService.getProduct(idProduct);
 		List<Price> prices = priceRepository.findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(product, brand, date, date);
-		Price price = prices.stream().max(Comparator.comparingInt(Price::getPriority)).orElse(null);
-		PriceDTO priceDTO = new PriceDTO(price.getStartDate(),price.getEndDate(),price.getProduct().getId(),price.getBrand().getId(),price.getPrice());
-		return priceDTO;
+		if(prices.isEmpty()) {
+			return new PriceDTO();
+		}else {
+			Price price = prices.stream().max(Comparator.comparingInt(Price::getPriority)).orElse(null);
+			PriceDTO priceDTO = new PriceDTO(price.getStartDate(),price.getEndDate(),price.getProduct().getId(),price.getBrand().getId(),price.getPrice());
+			return priceDTO;	
+		}
+		
+		
 	}
 
 }
