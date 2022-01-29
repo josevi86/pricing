@@ -1,6 +1,6 @@
 package com.zara.pricing.price;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -10,6 +10,6 @@ import com.zara.pricing.product.Product;
 
 public interface PriceRepository extends CrudRepository<Price, Long>{
 	
-	List<Price> findByProductAndBrandAndStartDateLessAndStartDateGreater(Product product, Brand brand, LocalDateTime startDate, LocalDateTime endDate);
+	List<Price> findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(Product product, Brand brand, Date startDate, Date endDate);
 
 }

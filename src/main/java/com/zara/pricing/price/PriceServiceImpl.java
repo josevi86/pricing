@@ -1,7 +1,7 @@
 package com.zara.pricing.price;
 
-import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +20,15 @@ public class PriceServiceImpl implements PriceService {
 	
 	@Autowired
 	private BrandService brandService;
-
 	
 	@Autowired
 	private ProductService productService;
 
 	@Override
-	public Price getActivePriceByProductAndDate(int idProduct, int idBrand, LocalDateTime dateTime) {
+	public Price getActivePriceByProductAndDate(int idProduct, int idBrand, Date date) {
 		Brand brand = brandService.getBrand(idBrand);
 		Product product = productService.getProduct(idProduct);
-		List<Price> prices = priceRepository.findByProductAndBrandAndStartDateLessAndStartDateGreater(product, brand, dateTime, dateTime);
+		List<Price> prices = priceRepository.findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(product, brand, date, date);
 		Price price = prices.stream().max(Comparator.comparingInt(Price::getPriority)).orElse(null);
 		return price;
 	}
