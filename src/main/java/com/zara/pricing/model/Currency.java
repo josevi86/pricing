@@ -1,4 +1,4 @@
-package com.zara.pricing.currency;
+package com.zara.pricing.model;
 
 public enum Currency {
 	EUR,

@@ -1,6 +1,8 @@
-package com.zara.pricing.price;
+package com.zara.pricing.service;
 
 import java.util.Date;
+
+import com.zara.pricing.dto.PriceDTO;
 
 
 public interface PriceService {

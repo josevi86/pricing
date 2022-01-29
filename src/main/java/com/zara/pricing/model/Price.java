@@ -1,4 +1,4 @@
-package com.zara.pricing.price;
+package com.zara.pricing.model;
 
 
 import java.util.Date;
@@ -9,10 +9,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import com.zara.pricing.brand.Brand;
-import com.zara.pricing.currency.Currency;
-import com.zara.pricing.product.Product;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

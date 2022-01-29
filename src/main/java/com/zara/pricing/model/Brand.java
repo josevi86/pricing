@@ -1,6 +1,9 @@
-package com.zara.pricing.price;
+package com.zara.pricing.model;
 
-import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -9,14 +12,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@Entity
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode @ToString
-public class PriceDTO {
+public class Brand {
 
-	private Date startDate;
-	private Date endDate;
-	private long productId;
-	private long brandId;
-	private float price;
+	private @Id Long id;
+	
+	@Column
+	private String brandName;
 	
 }
-

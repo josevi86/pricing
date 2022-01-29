@@ -1,7 +1,11 @@
-package com.zara.pricing.brand;
+package com.zara.pricing.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.zara.pricing.model.Brand;
+import com.zara.pricing.repository.BrandRepository;
+import com.zara.pricing.service.BrandService;
 
 @Service
 public class BrandServiceImpl implements BrandService {
