@@ -10,16 +10,19 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.zara.pricing.brand.Brand;
 import com.zara.pricing.currency.Currency;
 import com.zara.pricing.product.Product;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode @ToString
 public class Price {
 	
 	private @Id Long id;
@@ -33,8 +36,11 @@ public class Price {
 	@ManyToOne
 	private Product product;
 	
+	@ManyToOne
+	private Brand brand;
+	
 	@Column
-	private long priority;
+	private int priority;
 	
 	@Column
 	private float price;

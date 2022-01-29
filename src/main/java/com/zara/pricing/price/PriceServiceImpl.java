@@ -1,0 +1,37 @@
+package com.zara.pricing.price;
+
+import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.zara.pricing.brand.Brand;
+import com.zara.pricing.brand.BrandService;
+import com.zara.pricing.product.Product;
+import com.zara.pricing.product.ProductService;
+
+@Service
+public class PriceServiceImpl implements PriceService {
+	
+	@Autowired
+	private PriceRepository priceRepository;
+	
+	@Autowired
+	private BrandService brandService;
+
+	
+	@Autowired
+	private ProductService productService;
+
+	@Override
+	public Price getActivePriceByProductAndDate(int idProduct, int idBrand, LocalDateTime dateTime) {
+		Brand brand = brandService.getBrand(idBrand);
+		Product product = productService.getProduct(idProduct);
+		List<Price> prices = priceRepository.findByProductAndBrandAndStartDateLessAndStartDateGreater(product, brand, dateTime, dateTime);
+		Price price = prices.stream().max(Comparator.comparingInt(Price::getPriority)).orElse(null);
+		return price;
+	}
+
+}

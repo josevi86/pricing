@@ -1,4 +1,5 @@
-package com.zara.pricing.product;
+package com.zara.pricing.brand;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,10 +14,11 @@ import lombok.ToString;
 
 @Entity
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode @ToString
-public class Product {
+public class Brand {
 
 	private @Id Long id;
 	
 	@Column
-	private String productName;
+	private String brandName;
+	
 }
