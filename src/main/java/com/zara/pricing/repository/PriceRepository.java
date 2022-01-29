@@ -1,4 +1,4 @@
-package com.zara.pricing.price;
+package com.zara.pricing.repository;
 
 import java.util.Date;
 import java.util.List;
@@ -6,8 +6,9 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.zara.pricing.brand.Brand;
-import com.zara.pricing.product.Product;
+import com.zara.pricing.model.Brand;
+import com.zara.pricing.model.Price;
+import com.zara.pricing.model.Product;
 
 @Repository
 public interface PriceRepository extends CrudRepository<Price, Long>{

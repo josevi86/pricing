@@ -1,4 +1,4 @@
-package com.zara.pricing.price;
+package com.zara.pricing.controller;
 
 import java.util.Date;
 
@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.zara.pricing.dto.PriceDTO;
+import com.zara.pricing.service.PriceService;
 
 @RestController
 @RequestMapping("/price")
