@@ -4,6 +4,6 @@ import java.util.Date;
 
 public interface PriceService {
 	
-	Price getActivePriceByProductAndDate(int product, int brand, Date date);
+	PriceDTO getActivePriceByProductAndBrandAndDate(int product, int brand, Date date);
 	
 }
