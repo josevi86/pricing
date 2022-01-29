@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import com.zara.pricing.currency.Currency;
 import com.zara.pricing.product.Product;
@@ -29,7 +30,7 @@ public class Price {
 	@Column(columnDefinition = "TIMESTAMP")
 	private LocalDateTime endDate;
 	
-	@Column
+	@ManyToOne
 	private Product product;
 	
 	@Column
