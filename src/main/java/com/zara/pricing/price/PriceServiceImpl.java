@@ -15,14 +15,16 @@ import com.zara.pricing.product.ProductService;
 @Service
 public class PriceServiceImpl implements PriceService {
 	
-	@Autowired
-	private PriceRepository priceRepository;
+	private final PriceRepository priceRepository;
+	private final BrandService brandService;
+	private final ProductService productService;
 	
 	@Autowired
-	private BrandService brandService;
-	
-	@Autowired
-	private ProductService productService;
+	public PriceServiceImpl(PriceRepository priceRepository, BrandService brandService, ProductService productService) {
+		this.priceRepository = priceRepository;
+		this.brandService = brandService;
+		this.productService = productService;
+	}
 
 	@Override
 	public PriceDTO getActivePriceByProductAndBrandAndDate(int idProduct, int idBrand, Date date) {

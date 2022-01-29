@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/price")
 public class PriceController {
 
-	@Autowired
-	private PriceService priceService;
+	private final PriceService priceService;
 	
-	@GetMapping(value = "/activePrice")
+	@Autowired
+	public PriceController(PriceService priceService) {
+		this.priceService = priceService;
+	}
+	
+	
+	@GetMapping(value = "/active")
     public PriceDTO getPriceByProductAndDates(@RequestParam int idProduct, @RequestParam int idBrand, Date date) {
         return priceService.getActivePriceByProductAndBrandAndDate(idProduct, idBrand, date);
     }
