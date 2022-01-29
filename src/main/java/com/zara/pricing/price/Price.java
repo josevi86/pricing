@@ -1,7 +1,7 @@
 package com.zara.pricing.price;
 
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,10 +28,10 @@ public class Price {
 	private @Id Long id;
 	
 	@Column(columnDefinition = "TIMESTAMP")
-	private LocalDateTime startDate;
+	private Date startDate;
 	
 	@Column(columnDefinition = "TIMESTAMP")
-	private LocalDateTime endDate;
+	private Date endDate;
 	
 	@ManyToOne
 	private Product product;
