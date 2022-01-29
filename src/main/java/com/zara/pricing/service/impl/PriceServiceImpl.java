@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zara.pricing.dto.PriceDTO;
+import com.zara.pricing.exception.NoPriceException;
 import com.zara.pricing.model.Brand;
 import com.zara.pricing.model.Price;
 import com.zara.pricing.model.Product;
@@ -36,7 +37,7 @@ public class PriceServiceImpl implements PriceService {
 		Product product = productService.getProduct(idProduct);
 		List<Price> prices = priceRepository.findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(product, brand, date, date);
 		if(prices.isEmpty()) {
-			return new PriceDTO();
+			throw new NoPriceException(idProduct, idBrand, date);
 		}else {
 			Price price = prices.stream().max(Comparator.comparingInt(Price::getPriority)).orElse(null);
 			PriceDTO priceDTO = new PriceDTO(price.getStartDate(),price.getEndDate(),price.getProduct().getId(),price.getBrand().getId(),price.getPrice());
