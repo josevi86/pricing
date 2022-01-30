@@ -39,7 +39,7 @@ public class Price {
 	private int priority;
 	
 	@Column
-	private float price;
+	private float priceProduct;
 	
 	@Column
 	@Enumerated(EnumType.STRING)

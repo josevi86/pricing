@@ -3,6 +3,7 @@ package com.zara.pricing.service.impl;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,16 +34,19 @@ public class PriceServiceImpl implements PriceService {
 
 	@Override
 	public PriceDTO getActivePriceByProductAndBrandAndDate(int idProduct, int idBrand, Date date) {
+		PriceDTO priceResult = new PriceDTO();
 		Brand brand = brandService.getBrand(idBrand);
 		Product product = productService.getProduct(idProduct);
 		List<Price> prices = priceRepository.findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(product, brand, date, date);
 		if(prices.isEmpty()) {
 			throw new NoPriceException(idProduct, idBrand, date);
 		}else {
-			Price price = prices.stream().max(Comparator.comparingInt(Price::getPriority)).orElse(null);
-			PriceDTO priceDTO = new PriceDTO(price.getStartDate(),price.getEndDate(),price.getProduct().getId(),price.getBrand().getId(),price.getPrice());
-			return priceDTO;	
+			Optional<Price> price = prices.stream().max(Comparator.comparingInt(Price::getPriority));
+			if(!price.isEmpty()) {
+				priceResult = new PriceDTO(price.get().getStartDate(),price.get().getEndDate(),price.get().getProduct().getId(),price.get().getBrand().getId(),price.get().getPriceProduct());
+			}
 		}
+		return priceResult;
 		
 		
 	}
