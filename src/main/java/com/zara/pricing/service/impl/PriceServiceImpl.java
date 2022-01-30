@@ -43,7 +43,7 @@ public class PriceServiceImpl implements PriceService {
 		}else {
 			Optional<Price> price = prices.stream().max(Comparator.comparingInt(Price::getPriority));
 			if(!price.isEmpty()) {
-				priceResult = new PriceDTO(price.get().getStartDate(),price.get().getEndDate(),price.get().getProduct().getId(),price.get().getBrand().getId(),price.get().getPriceProduct());
+				priceResult = new PriceDTO(price.get().getStartDate(),price.get().getEndDate(),price.get().getProduct().getId(),price.get().getBrand().getId(),price.get().getPriceProduct(),price.get().getId());
 			}
 		}
 		return priceResult;

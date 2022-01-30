@@ -53,6 +53,7 @@ class PriceServiceImplTest {
 	void whenValidDataEntry_thenReturnPrice() throws ParseException {
 		long idProduct = 35455;
 		long idBrand = 1;
+		long rateToAply = 1;
 		float result = 23.3F;
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date date = format.parse("2020-06-14 10:00");
@@ -83,6 +84,8 @@ class PriceServiceImplTest {
 		assertEquals(idProduct, resultPriceDto.getProductId());
 		assertEquals(idBrand, resultPriceDto.getBrandId());
 		assertEquals(result, resultPriceDto.getPrice(), 2);
+		assertEquals(result, resultPriceDto.getRateToApply(), 1);
+		
 	}
 
 	@Test

@@ -17,6 +17,7 @@ public class PriceDTO {
 	private long productId;
 	private long brandId;
 	private float price;
+	private long rateToApply;
 	
 }
 

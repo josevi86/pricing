@@ -28,13 +28,14 @@ class PriceControllerTest {
 	private MockMvc mockMvc;
 
 	@ParameterizedTest
-	@CsvSource({ "35455, 1, 2020-06-14 10:00, 35.50", "35455, 1, 2020-06-14 16:00, 25.45",
-			"35455, 1, 2020-06-14 21:00, 35.50", "35455, 1, 2020-06-15 10:00, 30.50",
-			"35455, 1, 2020-06-16 21:00, 38.95" })
+	@CsvSource({ "35455, 1, 2020-06-14 10:00, 35.50, 1", "35455, 1, 2020-06-14 16:00, 25.45, 2",
+			"35455, 1, 2020-06-14 21:00, 35.50, 1", "35455, 1, 2020-06-15 10:00, 30.50, 3",
+			"35455, 1, 2020-06-16 21:00, 38.95, 4" })
 	void givenTestPetition1_whenGetProductPrices_thenStatus200_and_correctpriceParametrized(String idProduct,
-			String idBrand, String date, double expectedPrice) throws Exception {
+			String idBrand, String date, double expectedPrice, long rateToApply) throws Exception {
 		// Test 1
 		int precision = 2;
+		
 		// double expectedPrice = 35.50;
 		MvcResult result = this.mockMvc.perform(
 				get("/price/active").param("idProduct", idProduct).param("idBrand", idBrand).param("date", date))
@@ -44,6 +45,7 @@ class PriceControllerTest {
 		assertEquals(idProduct, String.valueOf(priceDto.getProductId()));
 		assertEquals(idBrand, String.valueOf(priceDto.getBrandId()));
 		assertEquals(expectedPrice, priceDto.getPrice(), precision);
+		assertEquals(rateToApply, priceDto.getRateToApply());
 	}
 
 	@Test
