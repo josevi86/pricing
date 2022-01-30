@@ -18,12 +18,11 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zara.pricing.dto.PriceDTO;
-import com.zara.pricing.exception.NoPriceException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class PriceControllerTestIT {
+class PriceControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
