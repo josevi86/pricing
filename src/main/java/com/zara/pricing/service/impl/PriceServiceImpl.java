@@ -39,7 +39,7 @@ public class PriceServiceImpl implements PriceService {
 		Product product = productService.getProduct(idProduct);
 		List<Price> prices = priceRepository.findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(product, brand, date, date);
 		if(prices.isEmpty()) {
-			throw new NoPriceException(idProduct, idBrand, date);
+			throw new NoPriceException(idProduct);
 		}else {
 			Optional<Price> price = prices.stream().max(Comparator.comparingInt(Price::getPriority));
 			if(!price.isEmpty()) {

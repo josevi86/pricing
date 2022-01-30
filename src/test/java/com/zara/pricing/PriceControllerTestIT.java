@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zara.pricing.dto.PriceDTO;
+import com.zara.pricing.exception.NoPriceException;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -44,6 +45,22 @@ class PriceControllerTestIT {
 		assertEquals(idProduct, String.valueOf(priceDto.getProductId()));
 		assertEquals(idBrand, String.valueOf(priceDto.getBrandId()));
 		assertEquals(expectedPrice, priceDto.getPrice(), precision);
+	}
+
+	@Test
+	void whenNoDataFound_thenNotFoundResponse() throws Exception {
+		// Test 1
+		String idProduct = "35455";
+		String idBrand = "1";
+		String date = "2025-06-16 21:00";
+		String expectedResult = "{\"message\":\"idProduct: 35455\"}";
+		// double expectedPrice = 35.50;
+		MvcResult result = this.mockMvc.perform(
+				get("/price/active").param("idProduct", idProduct).param("idBrand", idBrand).param("date", date))
+				.andDo(print()).andExpect(status().isNotFound()).andReturn();
+		
+		String resultJson = result.getResponse().getContentAsString();
+		assertEquals(expectedResult, resultJson);
 	}
 
 }
