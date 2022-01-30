@@ -1,5 +1,6 @@
 package com.zara.pricing.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public class PriceServiceImpl implements PriceService {
 	}
 
 	@Override
-	public PriceDTO getActivePriceByProductAndBrandAndDate(int idProduct, int idBrand, Date date) {
+	public PriceDTO getActivePriceByProductAndBrandAndDate(int idProduct, int idBrand, LocalDateTime date) {
 		PriceDTO priceResult = new PriceDTO();
 		Brand brand = brandService.getBrand(idBrand);
 		Product product = productService.getProduct(idProduct);

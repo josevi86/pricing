@@ -1,5 +1,6 @@
 package com.zara.pricing.controller;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class PriceController {
 	
 	
 	@GetMapping(value = "/active")
-    public PriceDTO getPriceByProductAndDates(@RequestParam int idProduct, @RequestParam int idBrand, @RequestParam  @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") Date date) {
+    public PriceDTO getPriceByProductAndDates(@RequestParam int idProduct, @RequestParam int idBrand, @RequestParam  @DateTimeFormat(pattern="yyyy-MM-dd HH:mm") LocalDateTime date) {
         return priceService.getActivePriceByProductAndBrandAndDate(idProduct, idBrand, date);
     }
 	

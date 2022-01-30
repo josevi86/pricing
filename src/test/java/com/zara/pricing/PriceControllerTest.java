@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.zara.pricing.dto.PriceDTO;
 
 @RunWith(SpringRunner.class)
@@ -33,15 +35,16 @@ class PriceControllerTest {
 			"35455, 1, 2020-06-16 21:00, 38.95, 4" })
 	void givenTestPetition1_whenGetProductPrices_thenStatus200_and_correctpriceParametrized(String idProduct,
 			String idBrand, String date, double expectedPrice, long rateToApply) throws Exception {
-		// Test 1
+
 		int precision = 2;
-		
-		// double expectedPrice = 35.50;
 		MvcResult result = this.mockMvc.perform(
 				get("/price/active").param("idProduct", idProduct).param("idBrand", idBrand).param("date", date))
 				.andDo(print()).andExpect(status().isOk()).andReturn();
 		String resultJson = result.getResponse().getContentAsString();
-		PriceDTO priceDto = new ObjectMapper().readValue(resultJson, PriceDTO.class);
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		PriceDTO priceDto = objectMapper.readValue(resultJson, PriceDTO.class);
 		assertEquals(idProduct, String.valueOf(priceDto.getProductId()));
 		assertEquals(idBrand, String.valueOf(priceDto.getBrandId()));
 		assertEquals(expectedPrice, priceDto.getPrice(), precision);
@@ -50,12 +53,10 @@ class PriceControllerTest {
 
 	@Test
 	void whenNoDataFound_thenNotFoundResponse() throws Exception {
-		// Test 1
 		String idProduct = "35455";
 		String idBrand = "1";
 		String date = "2025-06-16 21:00";
 		String expectedResult = "{\"message\":\"idProduct: 35455\"}";
-		// double expectedPrice = 35.50;
 		MvcResult result = this.mockMvc.perform(
 				get("/price/active").param("idProduct", idProduct).param("idBrand", idBrand).param("date", date))
 				.andDo(print()).andExpect(status().isNotFound()).andReturn();

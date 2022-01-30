@@ -1,5 +1,6 @@
 package com.zara.pricing.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -12,8 +13,8 @@ import lombok.ToString;
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @EqualsAndHashCode @ToString
 public class PriceDTO {
 
-	private Date startDate;
-	private Date endDate;
+	private LocalDateTime startDate;
+	private LocalDateTime endDate;
 	private long productId;
 	private long brandId;
 	private float price;

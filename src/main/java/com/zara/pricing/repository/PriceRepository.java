@@ -1,5 +1,6 @@
 package com.zara.pricing.repository;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +14,6 @@ import com.zara.pricing.model.Product;
 @Repository
 public interface PriceRepository extends CrudRepository<Price, Long>{
 	
-	List<Price> findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(Product product, Brand brand, Date startDate, Date endDate);
+	List<Price> findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(Product product, Brand brand, LocalDateTime startDate, LocalDateTime endDate);
 
 }

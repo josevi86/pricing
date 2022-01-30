@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,10 +55,10 @@ class PriceServiceImplTest {
 	void whenValidDataEntry_thenReturnPrice() throws ParseException {
 		long idProduct = 35455;
 		long idBrand = 1;
-		long rateToAply = 1;
+		long idRateType = 1;
 		float result = 23.3F;
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		Date date = format.parse("2020-06-14 10:00");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime dateTime = LocalDateTime.parse("2020-06-14 10:00",formatter);
 
 		Product product = Mockito.mock(Product.class);
 		when(product.getId()).thenReturn(idProduct);
@@ -67,24 +69,25 @@ class PriceServiceImplTest {
 		when(brandService.getBrand(idBrand)).thenReturn(brand);
 
 		Price price = Mockito.mock(Price.class);
-		when(price.getStartDate()).thenReturn(date);
-		when(price.getEndDate()).thenReturn(date);
+		when(price.getStartDate()).thenReturn(dateTime);
+		when(price.getEndDate()).thenReturn(dateTime);
 		when(price.getProduct()).thenReturn(product);
 		when(price.getBrand()).thenReturn(brand);
+		when(price.getId()).thenReturn(idRateType);
 		when(price.getPriceProduct()).thenReturn(result);
 		// price.get().getStartDate(),price.get().getEndDate(),price.get().getProduct().getId(),price.get().getBrand().getId(),price.get().getPriceProduct()
 		List<Price> prices = new ArrayList<Price>();
 		prices.add(price);
-		when(priceRepository.findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(product, brand, date, date))
+		when(priceRepository.findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(product, brand, dateTime, dateTime))
 				.thenReturn(prices);
 		PriceDTO resultPriceDto = priceService.getActivePriceByProductAndBrandAndDate((int) idProduct, (int) idBrand,
-				date);
+				dateTime);
 
 		assertNotNull(resultPriceDto);
 		assertEquals(idProduct, resultPriceDto.getProductId());
 		assertEquals(idBrand, resultPriceDto.getBrandId());
 		assertEquals(result, resultPriceDto.getPrice(), 2);
-		assertEquals(result, resultPriceDto.getRateToApply(), 1);
+		assertEquals(idRateType, resultPriceDto.getRateToApply());
 		
 	}
 
@@ -93,8 +96,9 @@ class PriceServiceImplTest {
 		long idProduct = 35455;
 		long idBrand = 1;
 		String messageException = "idProduct: "+idProduct;
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		Date date = format.parse("2020-06-14 10:00");
+		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime dateTime = LocalDateTime.parse("2020-06-14 10:00",formatter);
 
 		Product product = Mockito.mock(Product.class);
 		when(productService.getProduct(idProduct)).thenReturn(product);
@@ -103,11 +107,11 @@ class PriceServiceImplTest {
 		when(brandService.getBrand(idBrand)).thenReturn(brand);
 
 		List<Price> prices = new ArrayList<Price>();
-		when(priceRepository.findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(product, brand, date, date))
+		when(priceRepository.findByProductAndBrandAndStartDateLessThanAndEndDateGreaterThan(product, brand, dateTime, dateTime))
 				.thenReturn(prices);
 
 		NoPriceException thrown = assertThrows(NoPriceException.class, () -> {
-			priceService.getActivePriceByProductAndBrandAndDate((int) idProduct, (int) idBrand, date);
+			priceService.getActivePriceByProductAndBrandAndDate((int) idProduct, (int) idBrand, dateTime);
 		});
 		assertEquals(thrown.getMessage(), messageException);
 		
